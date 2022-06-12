@@ -4,6 +4,7 @@
 #import <stdio.h>
 #include <stdlib.h>
 #include "linked_list.h"
+#include "types.h"
 
 LinkedList* init_list() {
     return NULL;
@@ -45,6 +46,11 @@ void replace_at(LinkedList* list, int index, void* value) {
 
         list = list->next;
     }
+    if (list == NULL) {
+        fprintf(stderr, "index out of range");
+        exit(1);
+    }
+
     list->value = value;
 }
 
@@ -58,7 +64,14 @@ void add(LinkedList** list, void* elem) {
     (*list)->value = elem;
 }
 
-void remove_at(LinkedList* list, int index) {
+/*void remove_at(LinkedList* list, int index) {
+    if (list->next == NULL || index == 0){
+        //LinkedList** target = &list;
+        list = list->next;
+        //free(target);
+        return;
+    }
+
     int i = 0;
     while (i++ < index-1) {
         if (list == NULL) {
@@ -72,4 +85,52 @@ void remove_at(LinkedList* list, int index) {
     LinkedList* target = list->next;
     list->next = target->next;
     free(target);
+}*/
+
+void remove_at(LinkedList** list, int index) {
+    if (index == 0) {
+        LinkedList* target = *list;
+        *list = target->next;
+        free(target);
+        return;
+    }
+
+    int i = 0;
+    while (i++ < index-1) {
+        if (*list == NULL) {
+            fprintf(stderr, "index out of range");
+            exit(1);
+        }
+
+        list = (LinkedList **) &((**list).next);
+    }
+    if ((**list).next == NULL) {
+        fprintf(stderr, "index out of range");
+        exit(1);
+    }
+
+    LinkedList* target = (**list).next;
+    (**list).next = target->next;
+    free(target);
+}
+
+void pretty_print(LinkedList* list, Type type) {
+    if (list == NULL)
+        return;
+
+    print(list->value, type);
+
+    list = list->next;
+    if (list == NULL)
+        return;
+
+    printf(" |");
+    while (list->next != NULL) {
+        printf(" ");
+        print(list->value, type);
+        printf(" |");
+        list = list->next;
+    }
+    printf(" ");
+    print(list->value, type);
 }

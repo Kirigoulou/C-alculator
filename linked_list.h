@@ -5,12 +5,16 @@
 #ifndef CALCULATOR_LINKED_LIST_H
 #define CALCULATOR_LINKED_LIST_H
 
+#include "types.h"
+
 typedef struct LinkedList {
     void* next;
     void* value;
 } LinkedList;
 
 LinkedList* init_list();
+
+void pretty_print(LinkedList* list, Type type);
 
 int is_empty(LinkedList* list);
 
@@ -22,6 +26,6 @@ void replace_at(LinkedList* list, int index, void* value);
 
 void add(LinkedList** list, void* elem);
 
-void remove_at(LinkedList* list, int index);
+void remove_at(LinkedList** list, int index);
 
 #endif //CALCULATOR_LINKED_LIST_H
