@@ -64,28 +64,17 @@ void add(LinkedList** list, void* elem) {
     (*list)->value = elem;
 }
 
-/*void remove_at(LinkedList* list, int index) {
-    if (list->next == NULL || index == 0){
-        //LinkedList** target = &list;
-        list = list->next;
-        //free(target);
-        return;
+void pop(LinkedList** list) {
+    if (*list == NULL) {
+        fprintf(stderr, "cannot pop an empty list");
+        exit(1);
     }
 
-    int i = 0;
-    while (i++ < index-1) {
-        if (list == NULL) {
-            fprintf(stderr, "index out of range");
-            exit(1);
-        }
+    while ((**list).next != NULL)
+        list = (LinkedList **) &((**list).next);
 
-        list = list->next;
-    }
-
-    LinkedList* target = list->next;
-    list->next = target->next;
-    free(target);
-}*/
+    *list = NULL;
+}
 
 void remove_at(LinkedList** list, int index) {
     if (index == 0) {

@@ -26,6 +26,8 @@ void replace_at(LinkedList* list, int index, void* value);
 
 void add(LinkedList** list, void* elem);
 
+void pop(LinkedList** list);
+
 void remove_at(LinkedList** list, int index);
 
 #endif //CALCULATOR_LINKED_LIST_H
