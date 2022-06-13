@@ -11,7 +11,7 @@ LinkedList* init_list() {
 }
 
 int is_empty(LinkedList* list) {
-    return list->next == NULL;
+    return list == NULL;
 }
 
 int length(LinkedList* list) {
