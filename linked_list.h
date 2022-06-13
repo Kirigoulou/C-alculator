@@ -26,6 +26,8 @@ void replace_at(LinkedList* list, int index, void* value);
 
 void add(LinkedList** list, void* elem);
 
+void add_at(LinkedList** list, void* elem, int index);
+
 void pop(LinkedList** list);
 
 void remove_at(LinkedList** list, int index);

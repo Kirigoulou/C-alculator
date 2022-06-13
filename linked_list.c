@@ -64,6 +64,35 @@ void add(LinkedList** list, void* elem) {
     (*list)->value = elem;
 }
 
+void add_at(LinkedList** list, void* elem, int index) {
+    LinkedList* new_head = malloc(sizeof(LinkedList*));
+    new_head->value = elem;
+    new_head->next = *list;
+
+    if (index == 0) {
+        *list = new_head;
+        return;
+    }
+
+    int i = 0;
+    while (i++ < index-1) {
+        if (*list == NULL) {
+            fprintf(stderr, "index out of range");
+            exit(1);
+        }
+
+        list = (LinkedList **) &((**list).next);
+    }
+    if (*list == NULL) {
+        fprintf(stderr, "index out of range");
+        exit(1);
+    }
+
+    LinkedList* target = (**list).next;
+    (**list).next = new_head;
+    new_head->next = target;
+}
+
 void pop(LinkedList** list) {
     if (*list == NULL) {
         fprintf(stderr, "cannot pop an empty list");
