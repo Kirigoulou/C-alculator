@@ -5,7 +5,7 @@
 #ifndef CALCULATOR_STACK_H
 #define CALCULATOR_STACK_H
 
-#include "types.h"
+#include "../types.h"
 
 typedef struct Stack {
     void* next;

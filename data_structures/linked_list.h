@@ -5,7 +5,7 @@
 #ifndef CALCULATOR_LINKED_LIST_H
 #define CALCULATOR_LINKED_LIST_H
 
-#include "types.h"
+#include "../types.h"
 
 typedef struct LinkedList {
     void* next;
