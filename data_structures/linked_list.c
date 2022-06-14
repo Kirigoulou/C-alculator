@@ -10,11 +10,11 @@ LinkedList* init_list() {
     return NULL;
 }
 
-int is_empty(LinkedList* list) {
+int ll_is_empty(LinkedList* list) {
     return list == NULL;
 }
 
-int length(LinkedList* list) {
+int ll_length(LinkedList* list) {
     int n = 0;
     while (list->next != NULL) {
         n++;
@@ -23,7 +23,7 @@ int length(LinkedList* list) {
     return n;
 }
 
-void* get_at(LinkedList* list, int index) {
+void* ll_get_at(LinkedList* list, int index) {
     int i = 0;
     while (i++ < index) {
         if (list->next == NULL) {
@@ -36,7 +36,7 @@ void* get_at(LinkedList* list, int index) {
     return list->value;
 }
 
-void replace_at(LinkedList* list, int index, void* value) {
+void ll_replace_at(LinkedList* list, int index, void* value) {
     int i = 0;
     while (i++ < index) {
         if (list == NULL) {
@@ -54,7 +54,7 @@ void replace_at(LinkedList* list, int index, void* value) {
     list->value = value;
 }
 
-void add(LinkedList** list, void* elem) {
+void ll_add(LinkedList** list, void* elem) {
     LinkedList* current = *list;
     while (*list  != NULL)
         list  = (LinkedList **) &(*list)->next;
@@ -64,7 +64,7 @@ void add(LinkedList** list, void* elem) {
     (*list)->value = elem;
 }
 
-void add_at(LinkedList** list, void* elem, int index) {
+void ll_add_at(LinkedList** list, void* elem, int index) {
     LinkedList* new_head = malloc(sizeof(LinkedList*));
     new_head->value = elem;
     new_head->next = *list;
@@ -93,7 +93,7 @@ void add_at(LinkedList** list, void* elem, int index) {
     new_head->next = target;
 }
 
-void pop(LinkedList** list) {
+void ll_pop(LinkedList** list) {
     if (*list == NULL) {
         fprintf(stderr, "cannot pop an empty list");
         exit(1);
