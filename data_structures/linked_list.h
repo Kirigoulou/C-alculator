@@ -22,6 +22,8 @@ int ll_length(LinkedList* list);
 
 void* ll_get_at(LinkedList* list, int index);
 
+void* ll_last(LinkedList* list);
+
 void ll_replace_at(LinkedList* list, int index, void* value);
 
 void ll_add(LinkedList** list, void* elem);

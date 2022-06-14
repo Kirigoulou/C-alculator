@@ -12,6 +12,12 @@ typedef enum Type {
     STRING
 } Type;
 
+typedef enum TokenType {
+    TOKEN_OPERAND,
+    TOKEN_OPERATOR,
+    TOKEN_SEPARATOR
+} TokenType;
+
 void print(void* elem, Type type);
 
 #endif //CALCULATOR_TYPES_H

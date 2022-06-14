@@ -36,6 +36,18 @@ void* ll_get_at(LinkedList* list, int index) {
     return list->value;
 }
 
+void* ll_last(LinkedList* list) {
+    if (list == NULL) {
+        fprintf(stderr, "empty list");
+        exit(1);
+    }
+
+    while (list->next != NULL)
+        list = list->next;
+
+    return list->value;
+}
+
 void ll_replace_at(LinkedList* list, int index, void* value) {
     int i = 0;
     while (i++ < index) {
