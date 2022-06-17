@@ -29,7 +29,7 @@ void st_push(Stack** stack, void* elem) {
     *stack = new_head;
 }
 
-void st_pop(Stack** stack) {
+void* st_pop(Stack** stack) {
     if (*stack == NULL){
         fprintf(stderr, "cannot pop an empty stack");
         exit(1);
@@ -37,5 +37,5 @@ void st_pop(Stack** stack) {
 
     Stack* target = *stack;
     *stack = (**stack).next;
-    free(target);
+    return target;
 }

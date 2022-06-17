@@ -20,6 +20,6 @@ void* st_peek(Stack* stack);
 
 void st_push(Stack** stack, void* elem);
 
-void st_pop(Stack** stack);
+void* st_pop(Stack** stack);
 
 #endif //CALCULATOR_STACK_H
