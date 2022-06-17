@@ -9,6 +9,6 @@
 #include "../data_structures/ast.h"
 #include "../data_structures/stack.h"
 
-Stack* parse(LinkedList* tokens);
+Node* parse(LinkedList* tokens);
 
 #endif //CALCULATOR_PARSER_H
