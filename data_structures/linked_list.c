@@ -71,13 +71,13 @@ void ll_add(LinkedList** list, void* elem) {
     while (*list  != NULL)
         list  = (LinkedList **) &(*list)->next;
 
-    *list  = malloc(sizeof(LinkedList**));
+    *list  = malloc(sizeof(LinkedList));
     (*list)->next = NULL;
     (*list)->value = elem;
 }
 
 void ll_add_at(LinkedList** list, void* elem, int index) {
-    LinkedList* new_head = malloc(sizeof(LinkedList*));
+    LinkedList* new_head = malloc(sizeof(LinkedList));
     new_head->value = elem;
     new_head->next = *list;
 

@@ -26,13 +26,13 @@ void* qu_peek(Queue* queue) {
 }
 
 void qu_push(Queue** queue, void* elem) {
-    Queue* new_head = (Queue*) malloc(sizeof(Queue*));
+    Queue* new_head = malloc(sizeof(Queue));
     new_head->next = *queue;
     new_head->value = elem;
     *queue = new_head;
 }
 
-void qu_pop(Queue** queue) {
+void* qu_pop(Queue** queue) {
     if (qu_is_empty(*queue)) {
         fprintf(stderr, "cannot pop an empty queue");
         exit(1);
@@ -41,5 +41,8 @@ void qu_pop(Queue** queue) {
     while ((**queue).next != NULL)
         queue = (Queue**) &(**queue).next;
 
+    void* value = (*queue)->value;
+    free(*queue);
     *queue = NULL;
+    return value;
 }

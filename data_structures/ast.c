@@ -6,7 +6,7 @@
 #include "ast.h"
 
 Node* init_node(void* value, Node* left, Node* right) {
-    Node* node = malloc(sizeof(Node*));
+    Node* node = malloc(sizeof(Node));
     node->value = value;
     node->left = left;
     node->right = right;

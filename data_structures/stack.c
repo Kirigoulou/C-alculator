@@ -23,7 +23,7 @@ void* st_peek(Stack* stack) {
 }
 
 void st_push(Stack** stack, void* elem) {
-    Stack* new_head = malloc(sizeof(Stack*));
+    Stack* new_head = malloc(sizeof(Stack));
     new_head->value = elem;
     new_head->next = *stack;
     *stack = new_head;
@@ -35,7 +35,10 @@ void* st_pop(Stack** stack) {
         exit(1);
     }
 
+    //TODO pop doesn't return the right address value
     Stack* target = *stack;
+    void* value = target->value;
     *stack = (**stack).next;
-    return target;
+    free(target);
+    return value;
 }
