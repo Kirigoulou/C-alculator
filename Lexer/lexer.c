@@ -25,7 +25,7 @@ void add_token(LinkedList** tokens, char* value) {
     strcpy(token_val, value);
     Token* token = malloc(sizeof(Token*));
     token->value = token_val;
-    if (is_number(value)){
+    if (is_number(value)) {
         token->precedence = 0;
         token->type = TOKEN_OPERAND;
     }
@@ -53,7 +53,7 @@ LinkedList* lex(char expr[]) {
     LinkedList* tokens = init_list();
     size_t expr_size = strlen(expr);
 
-    char number[BUFF_SIZE];
+    char number[BUFF_SIZE] = "";
     for (int i = 0; i < expr_size; i++) {
         char symbol = expr[i];
 

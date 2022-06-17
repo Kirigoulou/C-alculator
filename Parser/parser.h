@@ -6,8 +6,9 @@
 #define CALCULATOR_PARSER_H
 
 #include "../data_structures/linked_list.h"
-#include "../data_structures/queue.h"
+#include "../data_structures/ast.h"
+#include "../data_structures/stack.h"
 
-Queue* parse(LinkedList* tokens);
+Stack* parse(LinkedList* tokens);
 
 #endif //CALCULATOR_PARSER_H

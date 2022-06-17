@@ -18,6 +18,6 @@ void* qu_peek(Queue* queue);
 
 void qu_push(Queue** queue, void* elem);
 
-void qu_pop(Queue** queue);
+void* qu_pop(Queue** queue);
 
 #endif //CALCULATOR_QUEUE_H

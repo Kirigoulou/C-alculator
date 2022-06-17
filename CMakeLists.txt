@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(Calculator main.c data_structures/linked_list.c data_structures/linked_list.h types.h
         types.c data_structures/stack.h data_structures/stack.c data_structures/queue.h
-               data_structures/queue.c Lexer/lexer.c Lexer/lexer.h)
+               data_structures/queue.c Lexer/lexer.c Lexer/lexer.h Parser/parser.c Parser/parser.h data_structures/ast.h data_structures/ast.c tests.c tests.h)

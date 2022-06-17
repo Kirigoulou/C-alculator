@@ -14,8 +14,6 @@ typedef struct Token {
     TokenType type;
 } Token;
 
-int is_number(char value[]);
-
 LinkedList* lex(char expr[]);
 
 #endif //CALCULATOR_LEXER_H

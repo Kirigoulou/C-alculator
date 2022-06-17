@@ -35,7 +35,6 @@ void* st_pop(Stack** stack) {
         exit(1);
     }
 
-    //TODO pop doesn't return the right address value
     Stack* target = *stack;
     void* value = target->value;
     *stack = (**stack).next;
