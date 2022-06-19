@@ -32,7 +32,8 @@ void manage_operator(Stack** operators_ptr, Stack** output_ptr, Token* operator)
         Token* top_operator = st_peek(*operators_ptr);
 
         while (!st_is_empty(*operators_ptr) &&
-               strcmp(top_operator->value, "(") != 0 && top_operator->precedence >= operator->precedence) {
+               strcmp(top_operator->value, "(") != 0 && (top_operator->precedence > operator->precedence ||
+                top_operator->precedence == operator->precedence && strcmp(operator->value, "^") != 0)) {
             st_pop(operators_ptr);
 
             push_operator_node(output_ptr, top_operator);
