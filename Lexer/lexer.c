@@ -24,6 +24,7 @@ void add_token(LinkedList** tokens, char* value) {
     char* token_val = malloc(BUFF_SIZE * sizeof(char));
     strcpy(token_val, value);
     Token* token = malloc(sizeof(Token*));
+    token->value = malloc(BUFF_SIZE * sizeof(char));
     token->value = token_val;
     if (is_number(value)) {
         token->precedence = 0;
@@ -50,6 +51,7 @@ void add_token(LinkedList** tokens, char* value) {
 }
 
 LinkedList* lex(char expr[]) {
+    //TODO maybe illegal access to value of token during initialization
     LinkedList* tokens = init_list();
     size_t expr_size = strlen(expr);
 

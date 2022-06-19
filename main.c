@@ -10,7 +10,6 @@
 
 
 int main() {
-    test_parser();
 
     return 0;
 }

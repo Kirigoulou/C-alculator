@@ -19,4 +19,6 @@ void infix_traversal(Node* root);
 
 Queue* ast_to_postfix(Node* root);
 
+long evaluate(Node* node);
+
 #endif //CALCULATOR_AST_H
