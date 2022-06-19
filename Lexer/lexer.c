@@ -23,30 +23,34 @@ int is_number(char value[]) {
 void add_token(LinkedList** tokens, char* value) {
     char* token_val = malloc(BUFF_SIZE * sizeof(char));
     strcpy(token_val, value);
-    Token* token = malloc(sizeof(Token*));
-    token->value = malloc(BUFF_SIZE * sizeof(char));
+    Token* token = malloc(sizeof(Token));
+    token->value = malloc(sizeof value);
     token->value = token_val;
     if (is_number(value)) {
         token->precedence = 0;
         token->type = TOKEN_OPERAND;
     }
-    else if (strcmp(value, "(") == 0 || strcmp(value, ")") == 0) {
-        token->precedence = 4;
-        token->type = TOKEN_SEPARATOR;
-    }
     else {
-        token->type = TOKEN_OPERATOR;
-        if (strcmp(value, "+") == 0 || strcmp(value, "-") == 0)
-            token->precedence = 1;
-        else if (strcmp(value, "*") == 0 || strcmp(value, "/") == 0)
-            token->precedence = 2;
-        else if (strcmp(value, "^") == 0)
-            token->precedence = 3;
+        char symbol = value[0];
+        if (symbol == '(' || symbol == ')') {
+            token->precedence = 4;
+            token->type = TOKEN_SEPARATOR;
+        }
         else {
-            fprintf(stderr, "unknown symbol '%s'", value);
-            exit(2);
+            token->type = TOKEN_OPERATOR;
+            if (symbol == '+' || symbol == '-')
+                token->precedence = 1;
+            else if (symbol == '*' || symbol == '/' || symbol == '%')
+                token->precedence = 2;
+            else if (symbol == '^')
+                token->precedence = 3;
+            else {
+                fprintf(stderr, "unknown symbol '%s'", value);
+                exit(2);
+            }
         }
     }
+
     ll_add(tokens, token);
 }
 

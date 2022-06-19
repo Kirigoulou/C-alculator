@@ -9,6 +9,11 @@
 
 #define BUFF_SIZE 16
 
+void raise_dividebyzero() {
+    fprintf(stderr, "can not divide by 0");
+    exit(2);
+}
+
 Node* init_node(void* value, Node* left, Node* right) {
     Node* node = malloc(sizeof(Node));
     node->value = value;
@@ -58,10 +63,17 @@ void compute_node(Node** node) {
             res = left_value * right_value;
             break;
         case '/':
+            if (right_value == 0)
+                raise_dividebyzero();
             res = left_value / right_value;
             break;
         case '^':
             res = pow(left_value, right_value);
+            break;
+        case '%':
+            if (right_value == 0)
+                raise_dividebyzero();
+            res = left_value % right_value;
             break;
         default:
             break;
