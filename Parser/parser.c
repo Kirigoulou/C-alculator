@@ -16,8 +16,22 @@ void raise_mismatched_parentheses() {
     exit(2);
 }
 
+void raise_missing_operand() {
+    fprintf(stderr, "missing operand");
+    exit(2);
+}
+
+void raise_missing_operator() {
+    fprintf(stderr, "missing operator");
+    exit(2);
+}
+
 void push_operator_node(Stack** output_ptr, Token* operator) {
-    Node *right_child = st_pop(output_ptr), *left_child = st_pop(output_ptr);
+    Node *right_child = st_pop(output_ptr), *left_child = NULL;
+    if (!st_is_empty(*output_ptr))
+        left_child = st_pop(output_ptr);
+    else
+        raise_missing_operand();
     Node *operator_node = init_node(operator, left_child, right_child);
     st_push(output_ptr, operator_node);
 }
@@ -98,5 +112,8 @@ Node* parse(LinkedList* tokens) {
             push_operator_node(&output, top_operator);
         }
     }
-    return output->value;
+    Node* result_operation = st_pop(&output);
+    if (!st_is_empty(output))
+        raise_missing_operator();
+    return result_operation;
 }
