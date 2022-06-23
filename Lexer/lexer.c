@@ -54,24 +54,48 @@ void add_token(LinkedList** tokens, char* value) {
     ll_add(tokens, token);
 }
 
+void add_plus_minus_token(LinkedList **tokens_ptr, int *plus_count, int *minus_count) {
+    if (*minus_count == 0) {
+        if (*plus_count > 0)
+            add_token(tokens_ptr, "+");
+    }
+    else
+        add_token(tokens_ptr, *minus_count % 2 == 0 ? "+" : "-");
+
+    *plus_count = *minus_count = 0;
+}
+
 LinkedList* lex(char expr[]) {
     //TODO maybe illegal access to value of token during initialization
     LinkedList* tokens = init_list();
     size_t expr_size = strlen(expr);
 
     char number[BUFF_SIZE] = "";
+    int plus_count = 0, minus_count = 0;
     for (int i = 0; i < expr_size; i++) {
         char symbol = expr[i];
 
-        if (is_digit(symbol))
-            strncat(number, &symbol, 1);
+        if (symbol == ' ')
+            continue;
         else {
-            if (strlen(number) != 0)
-                add_token(&tokens, number);
-            memset(number,0,sizeof(number));
+            if (symbol != '+' && symbol != '-')
+                add_plus_minus_token(&tokens, &plus_count, &minus_count);
 
-            if (symbol != ' ')
-                add_token(&tokens, &symbol);
+            if (is_digit(symbol))
+                strncat(number, &symbol, 1);
+            else {
+                // arithmetical symbol other than + or minus
+                if (strlen(number) != 0)
+                    add_token(&tokens, number);
+                memset(number, 0, sizeof(number));
+
+                if (symbol == '-')
+                    minus_count++;
+                else if (symbol == '+')
+                    plus_count++;
+                else
+                    add_token(&tokens, &symbol);
+            }
         }
     }
     if (strlen(number) != 0)
