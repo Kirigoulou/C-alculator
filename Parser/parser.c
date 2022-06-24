@@ -81,6 +81,8 @@ void manage_parentheses(Stack** operators_ptr, Stack** output_ptr, Token* parent
                     top_operator = st_pop(operators_ptr);
                 }
             }
+            else
+                st_pop(operators_ptr);
 
             //free(top_operator);
         }

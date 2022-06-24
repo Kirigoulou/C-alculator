@@ -32,7 +32,16 @@ void add_token(LinkedList** tokens, char* value) {
     }
     else {
         char symbol = value[0];
-        if (symbol == '(' || symbol == ')') {
+        if (symbol == '(') {
+            if (!ll_is_empty(*tokens)) {
+                Token *last_token = ll_last(*tokens);
+                if (last_token->type == TOKEN_OPERAND || last_token->value[0] == ')')
+                    add_token(tokens, "*");
+            }
+            token->precedence = 4;
+            token->type = TOKEN_SEPARATOR;
+        }
+        else if (symbol == ')') {
             token->precedence = 4;
             token->type = TOKEN_SEPARATOR;
         }
