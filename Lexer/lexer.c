@@ -47,8 +47,16 @@ void add_token(LinkedList** tokens, char* value) {
         }
         else {
             token->type = TOKEN_OPERATOR;
-            if (symbol == '+' || symbol == '-')
-                token->precedence = 1;
+            if (symbol == '-' || symbol == '+') {
+                if (ll_is_empty(*tokens) || ((Token*) ll_last(*tokens))->value[0] == '(') {
+                    add_token(tokens, "0");
+                    token->precedence = 4;
+                }
+                else
+                    token->precedence = 1;
+            }
+            /*else if (symbol == '+')
+                token->precedence = 1;*/
             else if (symbol == '*' || symbol == '/' || symbol == '%')
                 token->precedence = 2;
             else if (symbol == '^')
