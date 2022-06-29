@@ -4,10 +4,72 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <string.h>
 #include "ast.h"
 #include "../Lexer/lexer.h"
 
 #define BUFF_SIZE 16
+
+#pragma region arithmetical functions
+
+long max(long a, long b) {
+    return a >= b ? a : b;
+}
+
+long min(long a, long b) {
+    return a <= b ? a : b;
+}
+
+long mysqrt(long a) {
+    return (long) sqrt(a);
+}
+
+long facto(long a) {
+    if (a < 0) {
+        fprintf(stderr, "factorial of a negative number");
+        exit(3);
+    }
+
+    long res = 1;
+    while (a > 1)
+        res *= a--;
+    return res;
+}
+
+long is_prime(long a) {
+    int div = 2;
+    while (div * div < a && a % div != 0)
+        div++;
+    return div * div < a ? 0 : 1;
+}
+
+long fibo(int a) {
+    if (a < 0) {
+        fprintf(stderr, "fibonacci sequence of a negative number");
+        exit(3);
+    }
+    if (a == 0)
+        return 0;
+
+    int x = 0, y = 1, cpt = 2;
+    while (cpt++ <= a) {
+        int tmp = x;
+        x = y;
+        y = y + tmp;
+    }
+    return y;
+}
+
+long gcd(int a, int b) {
+    while (b != 0) {
+        int tmp = a;
+        a = b;
+        b = a % b;
+    }
+    return a;
+}
+
+#pragma endregion
 
 void raise_dividebyzero() {
     fprintf(stderr, "can not divide by 0");
@@ -44,13 +106,7 @@ Queue* ast_to_postfix(Node* root) {
     return postfix_expr;
 }
 
-void compute_node(Node** node) {
-    Node *left = (**node).left, *right = (**node).right;
-    Token *operator = (**node).value, *left_operand = left->value, *right_operand = right->value;
-
-    char operator_symbol = (operator->value)[0];
-    long left_value = strtol(left_operand->value, NULL, 10),
-        right_value = strtol(right_operand->value, NULL, 10);
+long compute_operator(char operator_symbol, long left_value, long right_value) {
     long res = 0;
     switch (operator_symbol) {
         case '+':
@@ -78,10 +134,50 @@ void compute_node(Node** node) {
         default:
             break;
     }
+    return res;
+}
 
-    snprintf(operator->value, sizeof operator->value, "%d", res);
+long compute_function(char name[], long left_value, long right_value) {
+    if (strcmp(name, "max") == 0)
+        return max(left_value, right_value);
+    if (strcmp(name, "max") == 0)
+        return max(left_value, right_value);
+    if (strcmp(name, "sqrt") == 0)
+        return mysqrt(left_value);
+    if (strcmp(name, "facto") == 0)
+        return facto(left_value);
+    if (strcmp(name, "isprime") == 0)
+        return is_prime(left_value);
+    if (strcmp(name, "fibo") == 0)
+        return fibo(left_value);
+
+    return gcd(left_value, right_value);
+}
+
+void compute_node(Node** node) {
+    Node *left = (**node).left, *right = (**node).right;
+    Token *operator = (**node).value, *left_operand = left->value, *right_operand = right->value;
+
+    long left_value = strtol(left_operand->value, NULL, 10),
+        right_value = strtol(right_operand->value, NULL, 10);
+    long res = 0;
+
+    if (operator->type == TOKEN_OPERATOR) {
+        char operator_symbol = (operator->value)[0];
+        res = compute_operator(operator_symbol, left_value, right_value);
+    }
+    else
+        res = compute_function(operator->value, left_value, right_value);
+
+    snprintf(operator->value, sizeof operator->value, "%ld", res);
+
+    free(left_operand->value);
+    free(left_operand);
+    free(right_operand->value);
+    free(right_operand);
     free(left);
     free(right);
+    
     (**node).left = NULL;
     (**node).right = NULL;
 }
@@ -91,7 +187,7 @@ void evaluate_rec(Node* node) {
         evaluate_rec(node->left);
         evaluate_rec(node->right);
 
-        if (((Token*) node->value)->type == TOKEN_OPERATOR) {
+        if (((Token*) node->value)->type == TOKEN_OPERATOR || ((Token*) node->value)->type == TOKEN_FUNCTION) {
             compute_node(&node);
         }
     }

@@ -15,7 +15,9 @@ typedef enum Type {
 typedef enum TokenType {
     TOKEN_OPERAND,
     TOKEN_OPERATOR,
-    TOKEN_SEPARATOR
+    TOKEN_SEPARATOR,
+    TOKEN_FUNCTION,
+    TOKEN_COMMA
 } TokenType;
 
 void print(void* elem, Type type);
